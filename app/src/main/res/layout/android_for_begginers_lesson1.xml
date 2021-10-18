@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="text"
+        android:inputType="text"
+        android:textAlignment="center" />
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="textPersonName"
+        android:inputType="textPersonName"
+        android:textAlignment="center" />
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="phone"
+        android:inputType="phone"
+        android:textAlignment="center" />
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="number"
+        android:inputType="number"
+        android:textAlignment="center" />
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="textPassword"
+        android:inputType="textPassword"
+        android:textAlignment="center" />
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="textEmailAddress"
+        android:inputType="textEmailAddress"
+        android:textAlignment="center" />
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        />
+</LinearLayout>
