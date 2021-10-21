@@ -1,17 +1,14 @@
 package com.example.geekbrains_androidforbegginers;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,20 +22,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        CalendarView calendarView = findViewById(R.id.calendarView);
-        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            int mYear = year;
-            int mMonth = month;
-            int mDayOfMonth = dayOfMonth;
-            String string = new StringBuilder().append(mDayOfMonth).append("-").append(mMonth).append("-").append(mYear).toString();
-            Toast.makeText(getApplicationContext(), string, Toast.LENGTH_LONG).show();
-        });
-        TextView textView = findViewById(R.id.txtView);
-        EditText editText = findViewById(R.id.editText);
-        SwitchCompat switchCompat = findViewById(R.id.switchButton);
-        CheckBox checkBox = findViewById(R.id.checkedButton);
+        TextView textView = findViewById(R.id.helloWorldId);
+        EditText editText = findViewById(R.id.putSomeTextId);
+        SwitchCompat switchCompat = findViewById(R.id.switchMeButtonId);
+        CheckBox checkBox = findViewById(R.id.checkedMeButtonId);
         ToggleButton toggleButton = findViewById(R.id.toggleButton);
-        Button button = findViewById(R.id.clearButton);
+        Button button = findViewById(R.id.clearButtonId);
+        Button buttonNextActivity = findViewById(R.id.nextButtonId);
 
         button.setOnClickListener(v -> {
             textView.setText("");
@@ -46,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
             switchCompat.setChecked(false);
             checkBox.setChecked(false);
             toggleButton.setChecked(false);
+        });
+
+        buttonNextActivity.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Main2Activity.class);
+            startActivity(intent);
         });
     }
 }
