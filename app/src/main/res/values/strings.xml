@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">geekBrains_AndroidForBegginers</string>
+    <string name="editTextString">Your expression</string>
 </resources>

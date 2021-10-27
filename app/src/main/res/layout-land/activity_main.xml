@@ -19,13 +19,13 @@
         app:srcCompat="@drawable/exercisebg" />
 
     <EditText
-        android:textColorHint="@color/white"
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="32dp"
         android:hint="@string/editTextString"
         android:textAlignment="center"
+        android:textColorHint="@color/white"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +38,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnTwo"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="2"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnThree"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="3"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnSum"
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="+"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
         </LinearLayout>
 
 
@@ -96,7 +96,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnFive"
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="5"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnSix"
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="6"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnResidual"
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="-"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
         </LinearLayout>
 
 
@@ -136,7 +136,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="7"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnEight"
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="8"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnNine"
@@ -152,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="9"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnMultiply"
@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="*"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -174,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="C"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnZero"
@@ -182,7 +182,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="0"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnEqual"
@@ -190,7 +190,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="="
-                android:textSize="40sp" />
+                android:textSize="34sp" />
 
             <Button
                 android:id="@+id/btnDivision"
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:text="/"
-                android:textSize="40sp" />
+                android:textSize="34sp" />
         </LinearLayout>
     </LinearLayout>
 
