@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 double result = 0;
                 result = calculate.calculateResult(saveObject.getArrayList());
                 Log.d(TAG, "Result " + result);
-                editText.setText(String.format("%s",String.valueOf(decimalFormat.format(result))));
+                editText.setText(String.format("%s", String.valueOf(decimalFormat.format(result))));
                 break;
         }
     }
