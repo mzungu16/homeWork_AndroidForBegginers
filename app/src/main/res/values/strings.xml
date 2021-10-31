@@ -19,4 +19,6 @@
     <string name="enter_value">Enter value</string>
     <string name="light_switch">Light</string>
     <string name="night_switch">Night</string>
+    <string name="settings">settings</string>
+    <string name="returns">return</string>
 </resources>
