@@ -29,13 +29,13 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.editText);
         editText.setShowSoftInputOnFocus(false);
 
-          ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-                        new ActivityResultContracts.StartActivityForResult(),
-                        result -> {
-                            if (result.getResultCode() == Activity.RESULT_OK) {
-                                recreate();
-                            }
-                        });
+        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        recreate();
+                    }
+                });
 
         settingsButton = findViewById(R.id.settingsBtn);
         settingsButton.setOnClickListener(v -> {
@@ -53,7 +53,11 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < listOfButtons.size(); i++) {
             Button btn = (Button) listOfButtons.get(i);
             btn.setOnClickListener(v -> {
-                updateText(btn.getText().toString());
+                if (btn.getId() == R.id.clearBtnId) {
+                    editText.setText("");
+                } else {
+                    updateText(btn.getText().toString());
+                }
             });
         }
     }
