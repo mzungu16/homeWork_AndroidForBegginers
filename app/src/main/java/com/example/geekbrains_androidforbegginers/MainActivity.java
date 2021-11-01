@@ -3,7 +3,8 @@ package com.example.geekbrains_androidforbegginers;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
+
+import org.mariuszgromada.math.mxparser.*;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +12,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 
@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         listOfButtons = findViewById(R.id.tableLayout).getTouchables();
 
         initMethod(listOfButtons);
+
+
     }
 
     private void initMethod(ArrayList<View> listOfButtons) {
@@ -55,6 +57,12 @@ public class MainActivity extends AppCompatActivity {
             btn.setOnClickListener(v -> {
                 if (btn.getId() == R.id.clearBtnId) {
                     editText.setText("");
+                } else if (btn.getId() == R.id.equalBtnId) {
+                    String userValues = editText.getText().toString();
+                    Expression expression = new Expression(userValues);
+                    String result = String.valueOf(expression.calculate());
+                    editText.setText(result);
+                    editText.setSelection(result.length());
                 } else {
                     updateText(btn.getText().toString());
                 }
@@ -64,6 +72,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateText(String s) {
         String oldString = editText.getText().toString();
-        editText.setText(String.format("%s%s", oldString, s));
+        int cursorPos = editText.getSelectionStart();
+        String leftString = oldString.substring(0, cursorPos);
+        String rightString = oldString.substring(cursorPos);
+        editText.setText(String.format("%s%s%s", leftString, s, rightString));
+        editText.setSelection(cursorPos + 1);
     }
 }

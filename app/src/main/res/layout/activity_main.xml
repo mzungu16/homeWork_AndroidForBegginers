@@ -26,6 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:hint="@string/enter_value"
+        android:textSize="@dimen/enter_value_text_size"
         android:minHeight="48dp"
         android:textAlignment="textEnd"
         android:textColor="@color/white"
