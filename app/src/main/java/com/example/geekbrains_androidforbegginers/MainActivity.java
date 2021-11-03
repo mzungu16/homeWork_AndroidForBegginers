@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         listOfButtons = findViewById(R.id.tableLayout).getTouchables();
 
         initMethod(listOfButtons);
-
-
     }
 
     private void initMethod(ArrayList<View> listOfButtons) {
