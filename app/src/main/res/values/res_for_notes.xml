@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="nameOfNotes">
+        <item>First Task</item>
+        <item>Second Task</item>
+        <item>Third Task</item>
+        <item>Fourth Task</item>
+        <item>Fifth Task</item>
+    </string-array>
+
+    <string-array name="descriptionOfNotes">
+        <item>First Task is about…</item>
+        <item>Second Task is about…</item>
+        <item>Third Task is about…</item>
+        <item>Fourth Task is about…</item>
+        <item>Fifth Task is about…</item>
+    </string-array>
+</resources>
