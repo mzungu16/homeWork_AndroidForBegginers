@@ -1,5 +1,6 @@
 package com.example.geekbrains_androidforbegginers;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class BlankFragment extends Fragment {
 
@@ -37,9 +39,22 @@ public class BlankFragment extends Fragment {
             textView.setText(nameOfNotes[i]);
             textView.setTextSize(30);
             int desToShow = i;
-            textView.setOnClickListener(v -> showDescriptionOfNote(desToShow));
-
+            textView.setOnClickListener(v -> {
+                Toast.makeText(getContext(), String.valueOf(desToShow), Toast.LENGTH_SHORT).show();
+                showDescriptionOfNote(desToShow);
+                paintBackGround(desToShow);
+            });
             linearLayout.addView(textView);
+        }
+    }
+
+    private void paintBackGround(int desToShow) {
+        LinearLayout linearLayout = getView().findViewById(R.id.linearLayout_fragment);
+        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+            linearLayout.getChildAt(i).setBackgroundColor(Color.TRANSPARENT);
+            if (desToShow == i) {
+                linearLayout.getChildAt(i).setBackgroundColor(Color.GRAY);
+            }
         }
     }
 

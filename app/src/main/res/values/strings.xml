@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">geekBrains_AndroidForBegginers</string>
+    <string name="app_name">Fragments_Begginer_Level</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="stringForTools">Тут будет текст</string>
