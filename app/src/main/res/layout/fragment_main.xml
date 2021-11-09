@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="horizontal"
+    tools:context=".MainFragment">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addNoteBtnId"
+        style="@style/style_of_buttons"
+        android:text="@string/add_note" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/checkNoteBtnId"
+        style="@style/style_of_buttons"
+        android:text="@string/check_notes" />
+</LinearLayout>
