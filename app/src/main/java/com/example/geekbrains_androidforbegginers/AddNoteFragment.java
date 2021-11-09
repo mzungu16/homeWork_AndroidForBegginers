@@ -2,14 +2,20 @@ package com.example.geekbrains_androidforbegginers;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class AddNoteFragment extends Fragment {
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -42,4 +48,27 @@ public class AddNoteFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_add_note, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ConstraintLayout constraintLayout = (ConstraintLayout) view;
+        EditText editText = (EditText) constraintLayout.getViewById(R.id.editText2);
+        EditText editText2 = (EditText) constraintLayout.getViewById(R.id.editTextTextMultiLine2);
+        AppCompatButton appCompatButton = (AppCompatButton) constraintLayout.getViewById(R.id.addBtn);
+
+
+        appCompatButton.setOnClickListener(v -> {
+            Log.d(MainActivity.TAG, editText.getText().toString());
+            Log.d(MainActivity.TAG, editText2.getText().toString());
+            AllNotesFragment allNotesFragment = AllNotesFragment.newInstance(editText.getText().toString(), editText2.getText().toString());
+
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.main_container, allNotesFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
+    }
+
 }

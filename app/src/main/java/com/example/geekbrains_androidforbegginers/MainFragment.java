@@ -78,7 +78,7 @@ public class MainFragment extends Fragment {
     private void goToCheckNotesFragment() {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_container, new AllNotesFragment())
+                .add(R.id.main_container,new AllNotesFragment())
                 .addToBackStack(null)
                 .commit();
     }
