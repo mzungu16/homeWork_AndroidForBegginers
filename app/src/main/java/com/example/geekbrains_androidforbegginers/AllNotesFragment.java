@@ -1,5 +1,7 @@
 package com.example.geekbrains_androidforbegginers;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,11 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AllNotesFragment extends Fragment {
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+public class AllNotesFragment extends Fragment implements Serializable {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -55,13 +60,24 @@ public class AllNotesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        ScrollView scrollView = view.findViewById(R.id.main_layout2);
+//        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(AddNoteFragment.STORAGE_NAME, Context.MODE_PRIVATE);
         LinearLayout linearLayout = view.findViewById(R.id.main_layout2);
-        TextView textView = new TextView(getContext());
-        Log.d(MainActivity.TAG, "Param1 - " + mParam1);
-        Log.d(MainActivity.TAG, "Param2 - " + mParam2);
-        textView.setTextSize(30);
-        textView.setText(String.format("%s\n%s", mParam1, mParam2));
-        linearLayout.addView(textView);
+
+/*        String stringTitle = sharedPreferences.getString(AddNoteFragment.TITLE, "");
+        String stringDes = sharedPreferences.getString(AddNoteFragment.DESCRIPTION, "");
+        Log.d(MainActivity.TAG, hashMap.toString());*/
+        if (AddNoteFragment.hashMap.isEmpty()) {
+            Toast.makeText(requireActivity(), "Your note is emptyt", Toast.LENGTH_LONG).show();
+        } else {
+            for (Map.Entry<String, String> e : AddNoteFragment.hashMap.entrySet()) {
+                TextView textView = new TextView(getContext());
+                textView.setTextSize(30);
+                textView.setPadding(2, 20, 2, 0);
+                textView.setText(String.format("%s\n%s", e.getKey(), e.getValue()));
+                linearLayout.addView(textView);
+            }
+        }
+
     }
+
 }
