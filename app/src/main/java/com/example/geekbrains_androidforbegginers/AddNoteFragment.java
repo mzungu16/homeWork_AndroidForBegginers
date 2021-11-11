@@ -51,11 +51,14 @@ public class AddNoteFragment extends Fragment implements Serializable {
         EditText editText = (EditText) constraintLayout.getViewById(R.id.editText2);
         EditText editText2 = (EditText) constraintLayout.getViewById(R.id.editTextTextMultiLine2);
         AppCompatButton appCompatButton = (AppCompatButton) constraintLayout.getViewById(R.id.addBtn);
-
         appCompatButton.setOnClickListener(v -> {
-            hashMap.put(editText.getText().toString().toUpperCase(Locale.ROOT), editText2.getText().toString());
-            Log.d(MainActivity.TAG, hashMap.toString());
-            Toast.makeText(requireActivity(), "Note Saved", Toast.LENGTH_LONG).show();
+            if (editText.getText().toString().equals("") || editText2.getText().toString().equals("")) {
+                Toast.makeText(requireActivity(), "You must add smth", Toast.LENGTH_LONG).show();
+            } else {
+                hashMap.put(editText.getText().toString().toUpperCase(Locale.ROOT), editText2.getText().toString());
+                Log.d(MainActivity.TAG, hashMap.toString());
+                Toast.makeText(requireActivity(), "Note Saved", Toast.LENGTH_LONG).show();
+            }
         });
     }
 
