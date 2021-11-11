@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,14 +61,11 @@ public class AllNotesFragment extends Fragment implements Serializable {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(AddNoteFragment.STORAGE_NAME, Context.MODE_PRIVATE);
+
         LinearLayout linearLayout = view.findViewById(R.id.main_layout2);
 
-/*        String stringTitle = sharedPreferences.getString(AddNoteFragment.TITLE, "");
-        String stringDes = sharedPreferences.getString(AddNoteFragment.DESCRIPTION, "");
-        Log.d(MainActivity.TAG, hashMap.toString());*/
         if (AddNoteFragment.hashMap.isEmpty()) {
-            Toast.makeText(requireActivity(), "Your note is emptyt", Toast.LENGTH_LONG).show();
+            Toast.makeText(requireActivity(), "Your note is empty", Toast.LENGTH_LONG).show();
         } else {
             for (Map.Entry<String, String> e : AddNoteFragment.hashMap.entrySet()) {
                 TextView textView = new TextView(getContext());
@@ -77,7 +75,5 @@ public class AllNotesFragment extends Fragment implements Serializable {
                 linearLayout.addView(textView);
             }
         }
-
     }
-
 }

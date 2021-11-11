@@ -23,9 +23,6 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AddNoteFragment extends Fragment implements Serializable {
-//    public static final String STORAGE_NAME = "storage";
-//    public static final String TITLE = "Title";
-//    public static final String DESCRIPTION = "Description";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -55,11 +52,6 @@ public class AddNoteFragment extends Fragment implements Serializable {
         AppCompatButton appCompatButton = (AppCompatButton) constraintLayout.getViewById(R.id.addBtn);
 
         appCompatButton.setOnClickListener(v -> {
-            /*SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(TITLE, editText.getText().toString());
-            editor.putString(DESCRIPTION, editText2.getText().toString());
-            editor.apply();*/
             hashMap.put(editText.getText().toString(), editText2.getText().toString());
             Log.d(MainActivity.TAG, hashMap.toString());
             Toast.makeText(requireActivity(), "Note Saved", Toast.LENGTH_LONG).show();
