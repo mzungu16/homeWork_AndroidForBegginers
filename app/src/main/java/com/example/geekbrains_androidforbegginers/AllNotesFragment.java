@@ -35,8 +35,6 @@ public class AllNotesFragment extends Fragment implements Serializable {
     public static AllNotesFragment newInstance(String param1, String param2) {
         AllNotesFragment fragment = new AllNotesFragment();
         Bundle args = new Bundle();
-        Log.d(MainActivity.TAG, "Check param1 - " + param1);
-        Log.d(MainActivity.TAG, "Check param2 - " + param2);
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
