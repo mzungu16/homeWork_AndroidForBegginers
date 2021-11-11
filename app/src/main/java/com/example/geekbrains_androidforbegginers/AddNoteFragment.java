@@ -61,5 +61,4 @@ public class AddNoteFragment extends Fragment implements Serializable {
             }
         });
     }
-
 }

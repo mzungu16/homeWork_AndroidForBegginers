@@ -28,6 +28,8 @@ public class AllNotesFragment extends Fragment implements Serializable {
 
     private String mParam1;
     private String mParam2;
+    private LinearLayout linearLayout;
+    private TextView textView;
 
     public AllNotesFragment() {
     }
@@ -60,13 +62,13 @@ public class AllNotesFragment extends Fragment implements Serializable {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LinearLayout linearLayout = view.findViewById(R.id.main_layout2);
+        linearLayout = view.findViewById(R.id.main_layout2);
 
         if (AddNoteFragment.hashMap.isEmpty()) {
             Toast.makeText(requireActivity(), "Your note is empty", Toast.LENGTH_LONG).show();
         } else {
             for (Map.Entry<String, String> e : AddNoteFragment.hashMap.entrySet()) {
-                TextView textView = new TextView(getContext());
+                textView = new TextView(getContext());
                 textView.setTextSize(25);
                 textView.setPadding(2, 20, 2, 0);
                 textView.setText(String.format("%s\n%s", e.getKey(), e.getValue()));
