@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class AddNoteFragment extends Fragment implements Serializable {
@@ -52,7 +53,7 @@ public class AddNoteFragment extends Fragment implements Serializable {
         AppCompatButton appCompatButton = (AppCompatButton) constraintLayout.getViewById(R.id.addBtn);
 
         appCompatButton.setOnClickListener(v -> {
-            hashMap.put(editText.getText().toString(), editText2.getText().toString());
+            hashMap.put(editText.getText().toString().toUpperCase(Locale.ROOT), editText2.getText().toString());
             Log.d(MainActivity.TAG, hashMap.toString());
             Toast.makeText(requireActivity(), "Note Saved", Toast.LENGTH_LONG).show();
         });

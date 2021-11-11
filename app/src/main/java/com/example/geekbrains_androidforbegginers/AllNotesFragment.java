@@ -69,7 +69,7 @@ public class AllNotesFragment extends Fragment implements Serializable {
         } else {
             for (Map.Entry<String, String> e : AddNoteFragment.hashMap.entrySet()) {
                 TextView textView = new TextView(getContext());
-                textView.setTextSize(30);
+                textView.setTextSize(20);
                 textView.setPadding(2, 20, 2, 0);
                 textView.setText(String.format("%s\n%s", e.getKey(), e.getValue()));
                 linearLayout.addView(textView);
