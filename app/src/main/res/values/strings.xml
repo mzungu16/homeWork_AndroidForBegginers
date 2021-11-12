@@ -7,4 +7,8 @@
     <string name="add_title">Title</string>
     <string name="add_button">Add</string>
     <string name="add_note">Add Note</string>
+    <string name="edit_popup">Edit</string>
+    <string name="clear_popup">Clear</string>
+    <string name="about_toolbar">About</string>
+    <string name="clear_btn">Clear</string>
 </resources>

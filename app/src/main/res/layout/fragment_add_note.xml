@@ -60,7 +60,9 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addBtn"
-        style="@style/style_of_buttons"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:background="@drawable/drawable_for_button"
         android:layout_marginTop="64dp"
         android:text="@string/add_button"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -69,5 +71,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine2"
         app:layout_constraintVertical_bias="0.715" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/clearBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/drawable_for_button"
+        android:text="@string/clear_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/addBtn"
+        app:layout_constraintHorizontal_bias="0.164"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine2"
+        app:layout_constraintVertical_bias="0.808" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

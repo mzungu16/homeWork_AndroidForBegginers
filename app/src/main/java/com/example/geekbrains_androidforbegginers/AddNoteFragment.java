@@ -15,10 +15,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -48,17 +50,34 @@ public class AddNoteFragment extends Fragment implements Serializable {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ConstraintLayout constraintLayout = (ConstraintLayout) view;
+        ArrayList<View> listOfButtons = constraintLayout.getTouchables();
+
         EditText editText = (EditText) constraintLayout.getViewById(R.id.editText2);
         EditText editText2 = (EditText) constraintLayout.getViewById(R.id.editTextTextMultiLine2);
-        AppCompatButton appCompatButton = (AppCompatButton) constraintLayout.getViewById(R.id.addBtn);
-        appCompatButton.setOnClickListener(v -> {
-            if (editText.getText().toString().equals("") || editText2.getText().toString().equals("")) {
-                Toast.makeText(requireActivity(), "You must add smth", Toast.LENGTH_LONG).show();
-            } else {
-                hashMap.put(editText.getText().toString().toUpperCase(Locale.ROOT), editText2.getText().toString());
-                Log.d(MainActivity.TAG, hashMap.toString());
-                Toast.makeText(requireActivity(), "Note Saved", Toast.LENGTH_LONG).show();
-            }
-        });
+
+        for (View btn : listOfButtons) {
+            btn.setOnClickListener(v -> {
+                if (btn.getId() == R.id.addBtn) {
+                    addNote(editText, editText2);
+                } else {
+                    clearNote(editText, editText2);
+                }
+            });
+        }
+    }
+
+    private void clearNote(EditText editText, EditText editText2) {
+        editText.setText("");
+        editText2.setText("");
+    }
+
+    private void addNote(EditText editText, EditText editText2) {
+        if (editText.getText().toString().equals("") || editText2.getText().toString().equals("")) {
+            Toast.makeText(requireActivity(), "You must add smth", Toast.LENGTH_LONG).show();
+        } else {
+            hashMap.put(editText.getText().toString().toUpperCase(Locale.ROOT), editText2.getText().toString());
+            Log.d(MainActivity.TAG, hashMap.toString());
+            Toast.makeText(requireActivity(), "Note Saved", Toast.LENGTH_LONG).show();
+        }
     }
 }
