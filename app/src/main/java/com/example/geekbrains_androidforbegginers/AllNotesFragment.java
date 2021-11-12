@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 public class AllNotesFragment extends Fragment implements Serializable {
@@ -26,7 +28,7 @@ public class AllNotesFragment extends Fragment implements Serializable {
     private String mParam1;
     private String mParam2;
     private LinearLayout linearLayout;
-    private TextView textView;
+    private final DataStoreClass dataStoreClass = new DataStoreClass();
 
     public AllNotesFragment() {
     }
@@ -58,15 +60,13 @@ public class AllNotesFragment extends Fragment implements Serializable {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         linearLayout = view.findViewById(R.id.main_layout2);
 
-        if (AddNoteFragment.hashMap.isEmpty()) {
-            Toast.makeText(requireActivity(), "Your note is empty", Toast.LENGTH_LONG).show();
+        if (dataStoreClass.getTitleWithDes().isEmpty()) {
+            Toast.makeText(requireActivity(), "Your note is empty", Toast.LENGTH_SHORT).show();
         } else {
-            for (Map.Entry<String, String> e : AddNoteFragment.hashMap.entrySet()) {
-
-                textView = new TextView(getContext());
+            for (Map.Entry<String, String> e : dataStoreClass.getTitleWithDes().entrySet()) {
+                TextView textView = new TextView(getContext());
                 textView.setTextSize(25);
                 textView.setPadding(2, 20, 2, 0);
                 textView.setText(String.format("%s\n%s", e.getKey(), e.getValue()));
@@ -79,7 +79,6 @@ public class AllNotesFragment extends Fragment implements Serializable {
     }
 
     private void initPopUp(TextView textView) {
-
         textView.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(requireActivity(), v);
             requireActivity().getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());

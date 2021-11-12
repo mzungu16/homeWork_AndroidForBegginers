@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,9 +27,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getFragments().size() > 0) {
+        if (getSupportFragmentManager().getFragments().size() > 1) {
             getSupportFragmentManager()
                     .popBackStack();
+            DataStoreClass dataStoreClass = new DataStoreClass();
+            Log.d(MainActivity.TAG, "В момент onBackPressed " + dataStoreClass.getTitleWithDes().toString());
         } else {
             super.onBackPressed();
         }

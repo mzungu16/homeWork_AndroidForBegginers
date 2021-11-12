@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -80,6 +81,8 @@ public class MainFragment extends Fragment {
     }
 
     private void goToCheckNotesFragment() {
+        DataStoreClass dataStoreClass = new DataStoreClass();
+        Log.d(MainActivity.TAG, "После checkBtn " + dataStoreClass.getTitleWithDes().toString());
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.main_container, new AllNotesFragment())

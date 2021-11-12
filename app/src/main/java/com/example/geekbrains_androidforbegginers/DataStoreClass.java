@@ -1,31 +1,38 @@
 package com.example.geekbrains_androidforbegginers;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.widget.EditText;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class DataStoreClass {
-    private List<String> titleList;
-    private List<String> desList;
+public class DataStoreClass implements Serializable {
+    private final HashMap<String, String> titleWithDes = new HashMap<>();
+
     public DataStoreClass() {
     }
 
-
-    public void setTitleList(EditText editText) {
-        this.titleList.add(editText.getText().toString());
+    public void setTitleWithDes(String title, String description) {
+        this.titleWithDes.put(title, description);
     }
 
-    public void setDesList(ArrayList<String> desList) {
-        this.desList = desList;
+    public void removeTitleWithDes(String key) {
+        this.titleWithDes.remove(key);
     }
 
+    public HashMap<String, String> getTitleWithDes() {
+        return titleWithDes;
+    }
 
-    public List<String> getTitleList() {
-        return titleList;
-    }
-    public List<String> getDesList() {
-        return desList;
-    }
+    /*public void saveData (){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BUNDLE,titleWithDes);
+
+    }*/
 
 }
