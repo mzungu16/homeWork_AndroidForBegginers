@@ -10,5 +10,5 @@
     <string name="edit_popup">Edit</string>
     <string name="clear_popup">Clear</string>
     <string name="about_toolbar">About</string>
-    <string name="clear_btn">Clear</string>
+    <string name="clear_btn">Clear SharedPref</string>
 </resources>

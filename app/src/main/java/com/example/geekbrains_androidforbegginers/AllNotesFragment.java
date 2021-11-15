@@ -1,5 +1,7 @@
 package com.example.geekbrains_androidforbegginers;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,9 +18,13 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class AllNotesFragment extends Fragment implements Serializable {
     private static final String ARG_PARAM1 = "param1";
@@ -28,7 +34,9 @@ public class AllNotesFragment extends Fragment implements Serializable {
     private String mParam1;
     private String mParam2;
     private LinearLayout linearLayout;
-    private final DataStoreClass dataStoreClass = new DataStoreClass();
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
 
     public AllNotesFragment() {
     }
@@ -61,21 +69,21 @@ public class AllNotesFragment extends Fragment implements Serializable {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         linearLayout = view.findViewById(R.id.main_layout2);
-
-        if (dataStoreClass.getTitleWithDes().isEmpty()) {
+        sharedPreferences = requireActivity().getSharedPreferences(AddNoteFragment.SHARED_FILE_1, Context.MODE_PRIVATE);
+        Set<String> ret = sharedPreferences.getStringSet(AddNoteFragment.KEY, new HashSet<>());
+        if (ret.isEmpty()) {
             Toast.makeText(requireActivity(), "Your note is empty", Toast.LENGTH_SHORT).show();
         } else {
-            for (Map.Entry<String, String> e : dataStoreClass.getTitleWithDes().entrySet()) {
+            for (String r : ret) {
                 TextView textView = new TextView(getContext());
                 textView.setTextSize(25);
                 textView.setPadding(2, 20, 2, 0);
-                textView.setText(String.format("%s\n%s", e.getKey(), e.getValue()));
-
+                textView.setText(String.format("%s", r));
                 initPopUp(textView);
-
                 linearLayout.addView(textView);
             }
         }
+
     }
 
     private void initPopUp(TextView textView) {
@@ -85,8 +93,11 @@ public class AllNotesFragment extends Fragment implements Serializable {
             popupMenu.setOnMenuItemClickListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.popup_menu_clear) {
-                    linearLayout.removeView(textView);
-                    recreateFragment();
+                    Toast.makeText(requireActivity(), "Clear", Toast.LENGTH_SHORT).show();
+//                    linearLayout.removeView(textView);
+//                    recreateFragment();
+                } else {
+                    Toast.makeText(requireActivity(), "Edit", Toast.LENGTH_SHORT).show();
                 }
                 return false;
             });

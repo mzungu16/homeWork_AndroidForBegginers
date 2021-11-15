@@ -81,8 +81,6 @@ public class MainFragment extends Fragment {
     }
 
     private void goToCheckNotesFragment() {
-        DataStoreClass dataStoreClass = new DataStoreClass();
-        Log.d(MainActivity.TAG, "После checkBtn " + dataStoreClass.getTitleWithDes().toString());
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.main_container, new AllNotesFragment())

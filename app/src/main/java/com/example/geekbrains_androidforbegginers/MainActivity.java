@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportFragmentManager().getFragments().size() > 1) {
             getSupportFragmentManager()
                     .popBackStack();
-            DataStoreClass dataStoreClass = new DataStoreClass();
-            Log.d(MainActivity.TAG, "В момент onBackPressed " + dataStoreClass.getTitleWithDes().toString());
         } else {
             super.onBackPressed();
         }
