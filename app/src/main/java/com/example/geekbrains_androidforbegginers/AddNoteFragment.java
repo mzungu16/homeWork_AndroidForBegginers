@@ -45,12 +45,14 @@ public class AddNoteFragment extends Fragment implements Serializable {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         ConstraintLayout constraintLayout = (ConstraintLayout) view;
         sharedPreferences = requireContext().getSharedPreferences(SHARED_FILE_1, Context.MODE_PRIVATE);
-        ArrayList<View> listOfButtons = constraintLayout.getTouchables();
 
         EditText title = (EditText) constraintLayout.getViewById(R.id.editText2);
         EditText description = (EditText) constraintLayout.getViewById(R.id.editTextTextMultiLine2);
+
+        ArrayList<View> listOfButtons = constraintLayout.getTouchables();
 
         for (View btn : listOfButtons) {
             btn.setOnClickListener(v -> {
@@ -69,6 +71,7 @@ public class AddNoteFragment extends Fragment implements Serializable {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
+        Toast.makeText(requireActivity(), "Clear sharedPref", Toast.LENGTH_SHORT).show();
     }
 
     private void addNote(EditText title, EditText description) {
@@ -81,21 +84,11 @@ public class AddNoteFragment extends Fragment implements Serializable {
     }
 
     private void addNoteToSharedPref(EditText title, EditText description) {
-        SharedPreferences.Editor editor;
         Set<String> stringSet = sharedPreferences.getStringSet(KEY, new HashSet<>());
-        if (stringSet.isEmpty()) {
-            stringSet.add(title.getText().toString());
-            stringSet.add(description.getText().toString());
-            editor = sharedPreferences.edit();
-            editor.putStringSet(KEY, stringSet);
-            editor.apply();
-        } else {
-            stringSet = sharedPreferences.getStringSet(KEY, new HashSet<>());
-            stringSet.add(title.getText().toString());
-            stringSet.add(description.getText().toString());
-            editor = sharedPreferences.edit();
-            editor.putStringSet(KEY,stringSet);
-            editor.apply();
-        }
+        stringSet.add(title.getText().toString());
+        stringSet.add(description.getText().toString());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putStringSet(KEY, stringSet);
+        editor.apply();
     }
 }
