@@ -1,5 +1,7 @@
 package com.example.geekbrains_androidforbegginers;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -67,9 +69,19 @@ public class MainFragment extends Fragment {
                     goToCheckNotesFragment();
                 } else if (button.getId() == R.id.addNoteBtnId) {
                     goToAddNoteFragment();
+                }else{
+                    clearSharedPref();
                 }
             });
         }
+    }
+
+    private void clearSharedPref() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(AddNoteFragment.SHARED_FILE_1, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+        Toast.makeText(requireActivity(), "Clear sharedPref", Toast.LENGTH_SHORT).show();
     }
 
     private void goToAddNoteFragment() {
