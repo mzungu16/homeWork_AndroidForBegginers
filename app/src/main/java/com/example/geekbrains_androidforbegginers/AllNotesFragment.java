@@ -1,17 +1,21 @@
 package com.example.geekbrains_androidforbegginers;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -82,12 +86,17 @@ public class AllNotesFragment extends Fragment implements Serializable {
             Log.d(MainActivity.TAG, "Выводим - " + stringSet.toString());
 
             for (int i = 0; i < stringSet.size(); i++) {
-                TextView textView = new TextView(getContext());
-                textView.setTextSize(25);
-                textView.setPadding(2, 20, 2, 0);
-                textView.setText(String.format("%s\n%s", stringSet.get(i).getTitle().toUpperCase(Locale.ROOT), stringSet.get(i).getDescription()));
-                initPopUp(textView, i);
-                linearLayout.addView(textView);
+                TextView titleText = new TextView(getContext());
+                TextView descriptionText = new TextView(getContext());
+                titleText.setTextSize(25);
+                descriptionText.setTextSize(25);
+                titleText.setPadding(2, 20, 2, 0);
+                titleText.setText(String.format("%s", stringSet.get(i).getTitle()));
+                descriptionText.setText(String.format("%s", stringSet.get(i).getDescription()));
+                initPopUp(titleText, i);
+                initPopUp(descriptionText, i);
+                linearLayout.addView(titleText);
+                linearLayout.addView(descriptionText);
             }
         }
     }
@@ -101,10 +110,11 @@ public class AllNotesFragment extends Fragment implements Serializable {
                 if (id == R.id.popup_menu_clear) {
                     linearLayout.removeView(textView);
                     stringsSet.remove(index);
-                    Log.d(MainActivity.TAG,stringsSet.toString());
+                    Log.d(MainActivity.TAG, stringsSet.toString());
                     recreateFragment();
                     Toast.makeText(requireActivity(), "Clear", Toast.LENGTH_SHORT).show();
                 } else {
+                    showCustomAlertDialog(textView);
                     Toast.makeText(requireActivity(), "Edit", Toast.LENGTH_SHORT).show();
                 }
                 return false;
@@ -112,6 +122,22 @@ public class AllNotesFragment extends Fragment implements Serializable {
             popupMenu.show();
         });
 
+    }
+
+    private void showCustomAlertDialog(TextView textView) {
+        final View customView = getLayoutInflater().inflate(R.layout.alert_dialog_with_custom_view, null);
+        EditText editText = customView.findViewById(R.id.edit_value);
+        AppCompatButton commitButton = customView.findViewById(R.id.btnCommitId);
+        commitButton.setOnClickListener(v1 -> {
+            textView.setText(editText.getText().toString());
+            Toast.makeText(requireActivity(), "Edit Button", Toast.LENGTH_SHORT).show();
+
+        });
+        new AlertDialog.Builder(requireActivity())
+                .setCancelable(true)
+                .setView(customView)
+                .setTitle("Edit")
+                .show();
     }
 
     private void recreateFragment() {

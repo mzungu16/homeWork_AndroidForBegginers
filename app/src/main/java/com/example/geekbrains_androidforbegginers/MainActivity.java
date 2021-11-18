@@ -3,6 +3,7 @@ package com.example.geekbrains_androidforbegginers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,7 +32,15 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .popBackStack();
         } else {
-            super.onBackPressed();
+            new AlertDialog.Builder(this)
+                    .setCancelable(false)
+                    .setMessage("Do you really want to quit?")
+                    .setTitle("Quit")
+                    .setPositiveButton("Ok",((dialog, which) -> {
+                        Toast.makeText(this,"OK",Toast.LENGTH_SHORT).show();
+                        super.onBackPressed();
+                    }))
+                    .show();
         }
     }
 
