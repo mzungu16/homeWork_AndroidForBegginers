@@ -3,13 +3,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="check_notes">Check Notes</string>
-    <string name="description_of_note">Description</string>
+    <string name="note">Note</string>
     <string name="add_title">Title</string>
-    <string name="add_button">Add</string>
+    <string name="add_button">Add New</string>
     <string name="add_note">Add Note</string>
     <string name="edit_popup">Edit</string>
     <string name="clear_popup">Clear</string>
     <string name="about_toolbar">About</string>
     <string name="clear_btn">Clear</string>
     <string name="clear_sharedpref">Clear SharedPref</string>
+    <string name="add">add</string>
 </resources>

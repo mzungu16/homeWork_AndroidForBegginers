@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,9 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.main_container, new MainFragment())
+                .add(R.id.fragment_container, new AllNotesFragment())
                 .commit();
-
     }
 
     @Override
@@ -36,9 +37,13 @@ public class MainActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setMessage("Do you really want to quit?")
                     .setTitle("Quit")
-                    .setPositiveButton("Ok",((dialog, which) -> {
-                        Toast.makeText(this,"OK",Toast.LENGTH_SHORT).show();
-                        super.onBackPressed();
+                    .setPositiveButton("Ok", ((dialog, which) -> {
+                        Toast.makeText(this, "OK", Toast.LENGTH_SHORT).show();
+                        SharedPreferences sharedPreferences = getSharedPreferences(AllNotesFragment.SHARED_KEY, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.apply();
+                        finish();
                     }))
                     .show();
         }
@@ -54,7 +59,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_menu_id) {
-            Toast.makeText(this, "ABOUT", Toast.LENGTH_SHORT).show();
+            SharedPreferences sharedPreferences = getSharedPreferences(AllNotesFragment.SHARED_KEY, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            Toast.makeText(this, "Clear sharedPref", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

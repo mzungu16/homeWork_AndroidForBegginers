@@ -1,21 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollable"
+    android:id="@+id/all_notes_linear_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@android:color/white"
     android:clickable="true"
     android:focusable="true"
+    android:orientation="vertical"
     tools:context=".AllNotesFragment">
 
-    <LinearLayout
-        android:id="@+id/main_layout2"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_fragment_conteiner"
         android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        tools:listitem="@layout/recycler_view_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addNewBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    </LinearLayout>
-
-</ScrollView>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/drawable_for_button"
+        android:text="@string/add_button"
+        android:textSize="30sp" />
+</LinearLayout>

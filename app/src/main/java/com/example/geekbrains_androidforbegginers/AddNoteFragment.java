@@ -23,8 +23,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AddNoteFragment extends Fragment implements Serializable {
-    public static final String SHARED_FILE_1 = "shared_file2";
-    public static final String KEY_FOR_SHAREDPREF = "key1";
 
     public AddNoteFragment() {
     }
@@ -47,45 +45,20 @@ public class AddNoteFragment extends Fragment implements Serializable {
 
         ConstraintLayout constraintLayout = (ConstraintLayout) view;
 
-        EditText title = (EditText) constraintLayout.getViewById(R.id.editText2);
-        EditText description = (EditText) constraintLayout.getViewById(R.id.editTextTextMultiLine2);
+        EditText editValue = (EditText) constraintLayout.getViewById(R.id.noteId);
 
-        ArrayList<View> listOfButtons = constraintLayout.getTouchables();
+        view.findViewById(R.id.addBtn).setOnClickListener(v -> {
+            Note note1 = new Note(editValue.getText().toString(), System.currentTimeMillis());
 
-        for (View btn : listOfButtons) {
-            btn.setOnClickListener(v -> {
-                if (btn.getId() == R.id.addBtn) {
-                    addNote(title, description);
-                } else {
-                    clearNote(title, description);
-                }
-            });
-        }
-    }
+            Log.d(MainActivity.TAG, note1.toString());
 
-    private void clearNote(EditText title, EditText description) {
-        title.setText("");
-        description.setText("");
-    }
+            AllNotesFragment allNotesFragment = AllNotesFragment.newInstance(note1.toString());
 
-    private void addNote(EditText title, EditText description) {
-        if (title.getText().toString().equals("") || description.getText().toString().equals("")) {
-            Toast.makeText(requireActivity(), "You must add smth", Toast.LENGTH_SHORT).show();
-        } else {
-            Note note = new Note(title.getText().toString(), description.getText().toString(), System.currentTimeMillis());
-            addNoteToSharedPref(note);
-            Toast.makeText(requireActivity(), "Note Saved", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void addNoteToSharedPref(Note note) {
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SHARED_FILE_1, Context.MODE_PRIVATE);
-        Set<String> stringSet = sharedPreferences.getStringSet(KEY_FOR_SHAREDPREF, new HashSet<>());
-        stringSet.add(note.toString());
-        Log.d(MainActivity.TAG, "Передаем - " + stringSet.toString());
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putStringSet(KEY_FOR_SHAREDPREF, stringSet);
-        editor.apply();
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, allNotesFragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 }

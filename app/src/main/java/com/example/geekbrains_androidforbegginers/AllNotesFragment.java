@@ -2,7 +2,6 @@ package com.example.geekbrains_androidforbegginers;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -10,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,33 +22,52 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
 public class AllNotesFragment extends Fragment implements Serializable {
+    private static final String ARG_PARAM1 = "param1";
+    public static final String SHARED_KEY = "file_of_sharedPref";
+    public static final String SHARED_KEY_SET = "shared_key_set";
 
-    private LinearLayout linearLayout;
-    private List<Note> stringsSet;
+    // TODO: Rename and change types of parameters
+    private String mParam1 = "";
+
+
+    private List<Note> list = new ArrayList<>();
 
     public AllNotesFragment() {
     }
 
+    public static AllNotesFragment newInstance(String param1) {
+        AllNotesFragment fragment = new AllNotesFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SHARED_KEY, Context.MODE_PRIVATE);
+            Set<String> stringsOfNotes = sharedPreferences.getStringSet(SHARED_KEY_SET, new HashSet<>());
+            stringsOfNotes.add(mParam1);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putStringSet(SHARED_KEY_SET, stringsOfNotes);
+            editor.apply();
+            list = new ArrayList<>();
+            for (String note : stringsOfNotes) {
+                list.add(new Note(note));
+            }
+            list.sort((o1, o2) -> (int) (o1.getDataOfCreate() - o2.getDataOfCreate()));
+        }
     }
 
     @Override
@@ -59,47 +79,27 @@ public class AllNotesFragment extends Fragment implements Serializable {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        linearLayout = view.findViewById(R.id.main_layout2);
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(AddNoteFragment.SHARED_FILE_1, Context.MODE_PRIVATE);
 
-        Set<String> ret = sharedPreferences.getStringSet(AddNoteFragment.KEY_FOR_SHAREDPREF, new HashSet<>());
-        stringsSet = new ArrayList<>();
-        for (String r : ret) {
-            Note note = new Note(r);
-            stringsSet.add(note);
-        }
-
-        stringsSet.sort(new Comparator<Note>() {
-            @Override
-            public int compare(Note o1, Note o2) {
-                return (int) (o1.getDataOfCreate() - o2.getDataOfCreate());
-            }
+        view.findViewById(R.id.addNewBtn).setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container, new AddNoteFragment())
+                    .addToBackStack(null)
+                    .commit();
         });
 
-        checkSetFromSharedPref(stringsSet);
-    }
 
-    private void checkSetFromSharedPref(List<Note> stringSet) {
-        if (stringSet.isEmpty()) {
-            Toast.makeText(requireActivity(), "Your note is empty", Toast.LENGTH_SHORT).show();
+        if (list.isEmpty()) {
+            Toast.makeText(requireActivity(), "You've not notes", Toast.LENGTH_SHORT).show();
         } else {
-            Log.d(MainActivity.TAG, "Выводим - " + stringSet.toString());
-
-            for (int i = 0; i < stringSet.size(); i++) {
-                TextView titleText = new TextView(getContext());
-                TextView descriptionText = new TextView(getContext());
-                titleText.setTextSize(25);
-                descriptionText.setTextSize(25);
-                titleText.setPadding(2, 20, 2, 0);
-                titleText.setText(String.format("%s", stringSet.get(i).getTitle()));
-                descriptionText.setText(String.format("%s", stringSet.get(i).getDescription()));
-                initPopUp(titleText, i);
-                initPopUp(descriptionText, i);
-                linearLayout.addView(titleText);
-                linearLayout.addView(descriptionText);
-            }
+            RecyclerView recyclerView = view.findViewById(R.id.recycler_fragment_conteiner);
+            NotesAdapter notesAdapter = new NotesAdapter(list);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireActivity());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(notesAdapter);
         }
     }
+
 
     private void initPopUp(TextView textView, int index) {
         textView.setOnClickListener(v -> {
@@ -108,10 +108,6 @@ public class AllNotesFragment extends Fragment implements Serializable {
             popupMenu.setOnMenuItemClickListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.popup_menu_clear) {
-                    linearLayout.removeView(textView);
-                    stringsSet.remove(index);
-                    Log.d(MainActivity.TAG, stringsSet.toString());
-                    recreateFragment();
                     Toast.makeText(requireActivity(), "Clear", Toast.LENGTH_SHORT).show();
                 } else {
                     showCustomAlertDialog(textView);

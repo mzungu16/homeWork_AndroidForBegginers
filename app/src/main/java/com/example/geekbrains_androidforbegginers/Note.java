@@ -2,41 +2,35 @@ package com.example.geekbrains_androidforbegginers;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Note {
-    private String title;
-    private String description;
+    private String note;
     private long dataOfCreate;
 
-    public Note(String title, String description, long dataOfCreate) {
-        this.title = title;
-        this.description = description;
+    public Note(String note, long dataOfCreate) {
+        this.note = note;
         this.dataOfCreate = dataOfCreate;
     }
 
-    public Note(String r) {
-        String[] data = r.split("\\|");
-        this.title = data[0];
-        this.description = data[1];
-        this.dataOfCreate = Long.parseLong(data[2]);
+    public Note(String note) {
+        String[] data = note.split("\\|");
+//        Log.d(MainActivity.TAG,Arrays.toString(data));
+        this.note = data[0];
+        this.dataOfCreate = Long.parseLong(data[1]);
     }
 
-    @Override
-    public String toString() {
-        return String.join("|", title, description, String.valueOf(dataOfCreate));
+    public String getNote() {
+        return note;
     }
 
     public long getDataOfCreate() {
         return dataOfCreate;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
+    public String toString() {
+        return String.join("|", note, String.valueOf(dataOfCreate));
     }
 }
