@@ -48,17 +48,21 @@ public class AddNoteFragment extends Fragment implements Serializable {
         EditText editValue = (EditText) constraintLayout.getViewById(R.id.noteId);
 
         view.findViewById(R.id.addBtn).setOnClickListener(v -> {
-            Note note1 = new Note(editValue.getText().toString(), System.currentTimeMillis());
+            if (editValue.getText().toString().equals("")) {
+                Toast.makeText(requireActivity(), "Must fill Note", Toast.LENGTH_SHORT).show();
+            } else {
+                Note note1 = new Note(editValue.getText().toString(), System.currentTimeMillis());
 
-            Log.d(MainActivity.TAG, note1.toString());
+                Log.d(MainActivity.TAG, note1.toString());
 
-            AllNotesFragment allNotesFragment = AllNotesFragment.newInstance(note1.toString());
+                AllNotesFragment allNotesFragment = AllNotesFragment.newInstance(note1.toString());
 
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, allNotesFragment)
-                    .addToBackStack(null)
-                    .commit();
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_container, allNotesFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
         });
     }
 }

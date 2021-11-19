@@ -12,10 +12,16 @@ import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
-    private List<Note> noteList;
+    private final List<Note> noteList;
+    private ClickOnNoteListener click;
+
 
     public NotesAdapter(List<Note> noteList) {
         this.noteList = noteList;
+    }
+
+    public void setClick(ClickOnNoteListener click) {
+        this.click = click;
     }
 
     @NonNull
@@ -47,7 +53,16 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             textView.setText(note.getNote());
             textView.setTextSize(40);
             textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textView.setOnClickListener(v -> {
+                if (click != null){
+                    click.onClickNote(v,getAdapterPosition());
+                }
+            });
         }
 
     }
+    interface ClickOnNoteListener {
+        void onClickNote(View view, int position);
+    }
+
 }
