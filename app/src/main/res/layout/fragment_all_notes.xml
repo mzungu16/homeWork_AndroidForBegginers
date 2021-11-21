@@ -16,19 +16,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_fragment_conteiner"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         tools:listitem="@layout/recycler_view_item">
 
     </androidx.recyclerview.widget.RecyclerView>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/addNewBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/drawable_for_button"
-        android:text="@string/add_button"
-        android:textSize="30sp" />
 </LinearLayout>

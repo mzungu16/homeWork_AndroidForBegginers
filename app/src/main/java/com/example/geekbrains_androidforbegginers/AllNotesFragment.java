@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +33,6 @@ public class AllNotesFragment extends Fragment implements Serializable {
     public static final String SHARED_KEY = "file_of_sharedPref";
     public static final String SHARED_KEY_SET = "shared_key_set";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1 = "";
-
-
     private List<Note> list = new ArrayList<>();
 
     public AllNotesFragment() {
@@ -51,20 +49,21 @@ public class AllNotesFragment extends Fragment implements Serializable {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SHARED_KEY, Context.MODE_PRIVATE);
+        Set<String> sharedPreferencesStringSet = sharedPreferences.getStringSet(SHARED_KEY_SET, new HashSet<>());
+        Set<String> stringSet = new HashSet<>(sharedPreferencesStringSet);
+
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SHARED_KEY, Context.MODE_PRIVATE);
-            Set<String> stringsOfNotes = sharedPreferences.getStringSet(SHARED_KEY_SET, new HashSet<>());
-            stringsOfNotes.add(mParam1);
+            stringSet.add(getArguments().getString(ARG_PARAM1));
+            Log.d(MainActivity.TAG, "Set после добавления строки" + stringSet.toString());
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putStringSet(SHARED_KEY_SET, stringsOfNotes);
+            editor.putStringSet(SHARED_KEY_SET, stringSet);
             editor.apply();
-            list = new ArrayList<>();
-            for (String note : stringsOfNotes) {
-                list.add(new Note(note));
-            }
-            list.sort((o1, o2) -> (int) (o1.getDataOfCreate() - o2.getDataOfCreate()));
         }
+        for (String note : stringSet) {
+            list.add(new Note(note));
+        }
+        list.sort((o1, o2) -> (int) (o1.getDataOfCreate() - o2.getDataOfCreate()));
     }
 
     @Override
@@ -77,19 +76,11 @@ public class AllNotesFragment extends Fragment implements Serializable {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.addNewBtn).setOnClickListener(v -> {
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container, new AddNoteFragment())
-                    .addToBackStack(null)
-                    .commit();
-        });
-
         if (list.isEmpty()) {
             Toast.makeText(requireActivity(), "You've not notes", Toast.LENGTH_SHORT).show();
         } else {
             RecyclerView recyclerView = view.findViewById(R.id.recycler_fragment_conteiner);
-            NotesAdapter notesAdapter = new NotesAdapter(list);
+            NotesAdapter notesAdapter = new NotesAdapter(list, getContext());
             notesAdapter.setClick(new NotesAdapter.ClickOnNoteListener() {
                 @Override
                 public void onClickNote(View view, int position) {

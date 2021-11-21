@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -43,9 +44,7 @@ public class AddNoteFragment extends Fragment implements Serializable {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ConstraintLayout constraintLayout = (ConstraintLayout) view;
-
-        EditText editValue = (EditText) constraintLayout.getViewById(R.id.noteId);
+        EditText editValue = view.findViewById(R.id.noteId);
 
         view.findViewById(R.id.addBtn).setOnClickListener(v -> {
             if (editValue.getText().toString().equals("")) {

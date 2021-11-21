@@ -59,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.toolbar_menu_id) {
-            SharedPreferences sharedPreferences = getSharedPreferences(AllNotesFragment.SHARED_KEY, MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.clear();
-            editor.apply();
-            Toast.makeText(this, "Clear sharedPref", Toast.LENGTH_SHORT).show();
+          getSupportFragmentManager()
+                  .beginTransaction()
+                  .add(R.id.fragment_container, new AddNoteFragment())
+                  .addToBackStack(null)
+                  .commit();
         }
         return super.onOptionsItemSelected(item);
     }

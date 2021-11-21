@@ -17,7 +17,6 @@ public class Note {
 
     public Note(String note) {
         String[] data = note.split("\\|");
-//        Log.d(MainActivity.TAG,Arrays.toString(data));
         this.note = data[0];
         this.dataOfCreate = Long.parseLong(data[1]);
     }

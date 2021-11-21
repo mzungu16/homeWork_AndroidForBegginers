@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/toolbar_menu_id"
-        android:icon="@android:drawable/ic_dialog_info"
+        android:icon="@android:drawable/ic_input_add"
         android:title="@string/about_toolbar"
         app:showAsAction="always" />
 

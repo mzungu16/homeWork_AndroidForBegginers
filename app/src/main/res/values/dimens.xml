@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="note_text">10sp</dimen>
+    <dimen name="add_note">30sp</dimen>
+    <dimen name="btn_add">20sp</dimen>
+</resources>
