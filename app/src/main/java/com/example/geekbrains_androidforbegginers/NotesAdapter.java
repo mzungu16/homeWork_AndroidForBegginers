@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -61,21 +63,17 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
             textView.setText(note.getNote());
             textView.setTextSize(context.getResources().getDimension(R.dimen.note_text));
             textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            textView.setOnClickListener(v -> {
+            textView.setOnLongClickListener(v -> {
                 if (click != null) {
                     click.onClickNote(v, getAdapterPosition());
                 }
-            });
-            textView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    menuPosition = getLayoutPosition();
-                    return false;
-                }
+                return false;
             });
         }
 
     }
+
+
 
     interface ClickOnNoteListener {
         void onClickNote(View view, int position);

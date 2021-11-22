@@ -2,6 +2,7 @@ package com.example.geekbrains_androidforbegginers;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -21,6 +22,8 @@ import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -84,7 +87,7 @@ public class AllNotesFragment extends Fragment implements Serializable {
             notesAdapter.setClick(new NotesAdapter.ClickOnNoteListener() {
                 @Override
                 public void onClickNote(View view, int position) {
-                    Toast.makeText(requireActivity(), list.get(position).getNote(), Toast.LENGTH_SHORT).show();
+                    initPopUp(view);
                 }
             });
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireActivity());
@@ -94,38 +97,36 @@ public class AllNotesFragment extends Fragment implements Serializable {
     }
 
 
-    private void initPopUp(TextView textView, int index) {
-        textView.setOnClickListener(v -> {
-            PopupMenu popupMenu = new PopupMenu(requireActivity(), v);
-            requireActivity().getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(item -> {
-                int id = item.getItemId();
-                if (id == R.id.popup_menu_clear) {
-                    Toast.makeText(requireActivity(), "Clear", Toast.LENGTH_SHORT).show();
-                } else {
-                    showCustomAlertDialog(textView);
-                    Toast.makeText(requireActivity(), "Edit", Toast.LENGTH_SHORT).show();
-                }
-                return false;
-            });
-            popupMenu.show();
+    private void initPopUp(View view) {
+        PopupMenu popupMenu = new PopupMenu(requireActivity(), view);
+        requireActivity().getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.popup_menu_clear) {
+                Toast.makeText(requireActivity(), "Clear", Toast.LENGTH_SHORT).show();
+            } else {
+                showCustomAlertDialog(view);
+                Toast.makeText(requireActivity(), "Edit", Toast.LENGTH_SHORT).show();
+            }
+            return false;
         });
+        popupMenu.show();
 
     }
 
-    private void showCustomAlertDialog(TextView textView) {
-        final View customView = getLayoutInflater().inflate(R.layout.alert_dialog_with_custom_view, null);
-        EditText editText = customView.findViewById(R.id.edit_value);
-        AppCompatButton commitButton = customView.findViewById(R.id.btnCommitId);
-        commitButton.setOnClickListener(v1 -> {
-            textView.setText(editText.getText().toString());
-            Toast.makeText(requireActivity(), "Edit Button", Toast.LENGTH_SHORT).show();
 
-        });
+    private void showCustomAlertDialog(View view) {
+        final View customView = getLayoutInflater().inflate(R.layout.alert_dialog_with_custom_view, null);
         new AlertDialog.Builder(requireActivity())
                 .setCancelable(true)
                 .setView(customView)
-                .setTitle("Edit")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText editText = customView.findViewById(R.id.edit_value);
+                        Toast.makeText(requireActivity(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .show();
     }
 

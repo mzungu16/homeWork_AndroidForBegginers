@@ -13,4 +13,6 @@
     <string name="clear_btn">Clear</string>
     <string name="clear_sharedpref">Clear SharedPref</string>
     <string name="add">add</string>
+    <string name="enter_smth">Enter smth</string>
+    <string name="commit">Commit</string>
 </resources>
