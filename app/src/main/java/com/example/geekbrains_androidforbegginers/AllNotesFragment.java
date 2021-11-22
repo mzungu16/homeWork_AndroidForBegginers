@@ -36,7 +36,8 @@ public class AllNotesFragment extends Fragment implements Serializable {
     public static final String SHARED_KEY = "file_of_sharedPref";
     public static final String SHARED_KEY_SET = "shared_key_set";
 
-    private List<Note> list = new ArrayList<>();
+    private final List<Note> list = new ArrayList<>();
+    private Set<String> stringSet;
 
     public AllNotesFragment() {
     }
@@ -54,8 +55,7 @@ public class AllNotesFragment extends Fragment implements Serializable {
         super.onCreate(savedInstanceState);
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SHARED_KEY, Context.MODE_PRIVATE);
         Set<String> sharedPreferencesStringSet = sharedPreferences.getStringSet(SHARED_KEY_SET, new HashSet<>());
-        Set<String> stringSet = new HashSet<>(sharedPreferencesStringSet);
-
+        stringSet = new HashSet<>(sharedPreferencesStringSet);
         if (getArguments() != null) {
             stringSet.add(getArguments().getString(ARG_PARAM1));
             Log.d(MainActivity.TAG, "Set после добавления строки" + stringSet.toString());
@@ -63,10 +63,6 @@ public class AllNotesFragment extends Fragment implements Serializable {
             editor.putStringSet(SHARED_KEY_SET, stringSet);
             editor.apply();
         }
-        for (String note : stringSet) {
-            list.add(new Note(note));
-        }
-        list.sort((o1, o2) -> (int) (o1.getDataOfCreate() - o2.getDataOfCreate()));
     }
 
     @Override
@@ -79,6 +75,10 @@ public class AllNotesFragment extends Fragment implements Serializable {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        for (String note : stringSet) {
+            list.add(new Note(note));
+        }
+        list.sort((o1, o2) -> (int) (o1.getDataOfCreate() - o2.getDataOfCreate()));
         if (list.isEmpty()) {
             Toast.makeText(requireActivity(), "You've not notes", Toast.LENGTH_SHORT).show();
         } else {
