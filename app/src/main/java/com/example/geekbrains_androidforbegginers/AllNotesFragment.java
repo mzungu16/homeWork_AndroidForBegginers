@@ -74,7 +74,6 @@ public class AllNotesFragment extends Fragment implements Serializable {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         for (String note : stringSet) {
             list.add(new Note(note));
         }
