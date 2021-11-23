@@ -31,11 +31,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class AllNotesFragment extends Fragment implements Serializable {
+public class AllNotesFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     public static final String SHARED_KEY = "file_of_sharedPref";
     public static final String SHARED_KEY_SET = "shared_key_set";
 
+
+    private SharedPreferences sharedPreferences;
+    private NotesAdapter notesAdapter;
     private final List<Note> list = new ArrayList<>();
     private Set<String> stringSet;
 
@@ -53,7 +56,7 @@ public class AllNotesFragment extends Fragment implements Serializable {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(SHARED_KEY, Context.MODE_PRIVATE);
+        sharedPreferences = requireContext().getSharedPreferences(SHARED_KEY, Context.MODE_PRIVATE);
         Set<String> sharedPreferencesStringSet = sharedPreferences.getStringSet(SHARED_KEY_SET, new HashSet<>());
         stringSet = new HashSet<>(sharedPreferencesStringSet);
         if (getArguments() != null) {
@@ -78,33 +81,44 @@ public class AllNotesFragment extends Fragment implements Serializable {
             list.add(new Note(note));
         }
         list.sort((o1, o2) -> (int) (o1.getDataOfCreate() - o2.getDataOfCreate()));
+
         if (list.isEmpty()) {
             Toast.makeText(requireActivity(), "You've not notes", Toast.LENGTH_SHORT).show();
         } else {
             RecyclerView recyclerView = view.findViewById(R.id.recycler_fragment_conteiner);
-            NotesAdapter notesAdapter = new NotesAdapter(list, getContext());
+            notesAdapter = new NotesAdapter(list, getContext());
             notesAdapter.setClick(new NotesAdapter.ClickOnNoteListener() {
                 @Override
                 public void onClickNote(View view, int position) {
-                    initPopUp(view);
+                    initPopUp(view, position);
                 }
             });
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireActivity());
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(notesAdapter);
         }
+
     }
 
 
-    private void initPopUp(View view) {
+    private void initPopUp(View view, int position) {
         PopupMenu popupMenu = new PopupMenu(requireActivity(), view);
         requireActivity().getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(item -> {
             int id = item.getItemId();
             if (id == R.id.popup_menu_clear) {
+                list.remove(position);
+                stringSet.clear();
+                for (Note string : list) {
+                    stringSet.add(string.getNote() + "|" + string.getDataOfCreate());
+                }
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putStringSet(SHARED_KEY_SET, stringSet);
+                editor.apply();
+                notesAdapter.notifyItemRemoved(position);
                 Toast.makeText(requireActivity(), "Clear", Toast.LENGTH_SHORT).show();
             } else {
-                showCustomAlertDialog(view);
+                showCustomAlertDialog(view, position);
                 Toast.makeText(requireActivity(), "Edit", Toast.LENGTH_SHORT).show();
             }
             return false;
@@ -114,7 +128,7 @@ public class AllNotesFragment extends Fragment implements Serializable {
     }
 
 
-    private void showCustomAlertDialog(View view) {
+    private void showCustomAlertDialog(View view, int position) {
         final View customView = getLayoutInflater().inflate(R.layout.alert_dialog_with_custom_view, null);
         new AlertDialog.Builder(requireActivity())
                 .setCancelable(true)
@@ -123,6 +137,16 @@ public class AllNotesFragment extends Fragment implements Serializable {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         EditText editText = customView.findViewById(R.id.edit_value);
+                        Note note1 = new Note(editText.getText().toString(), System.currentTimeMillis());
+                        list.set(position, note1);
+                        stringSet.clear();
+                        for (Note string : list) {
+                            stringSet.add(string.getNote() + "|" + string.getDataOfCreate());
+                        }
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putStringSet(SHARED_KEY_SET, stringSet);
+                        editor.apply();
+                        notesAdapter.notifyItemChanged(position);
                         Toast.makeText(requireActivity(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -136,4 +160,5 @@ public class AllNotesFragment extends Fragment implements Serializable {
                 .attach(AllNotesFragment.this)
                 .commit();
     }
+
 }

@@ -6,9 +6,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Note {
+public class Note{
+    private List<Note> list;
     private String note;
     private long dataOfCreate;
+
+    public Note(List<Note> list) {
+        this.list = list;
+    }
 
     public Note(String note, long dataOfCreate) {
         this.note = note;
@@ -32,4 +37,5 @@ public class Note {
     public String toString() {
         return String.join("|", note, String.valueOf(dataOfCreate));
     }
+
 }
