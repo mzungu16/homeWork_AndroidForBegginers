@@ -87,19 +87,15 @@ public class AllNotesFragment extends Fragment {
         } else {
             RecyclerView recyclerView = view.findViewById(R.id.recycler_fragment_conteiner);
             notesAdapter = new NotesAdapter(list, getContext());
-            notesAdapter.setClick(new NotesAdapter.ClickOnNoteListener() {
-                @Override
-                public void onClickNote(View view, int position) {
-                    initPopUp(view, position);
-                }
-            });
+
+            notesAdapter.setClick(AllNotesFragment.this::initPopUp);
+
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(requireActivity());
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(notesAdapter);
         }
 
     }
-
 
     private void initPopUp(View view, int position) {
         PopupMenu popupMenu = new PopupMenu(requireActivity(), view);
@@ -108,17 +104,11 @@ public class AllNotesFragment extends Fragment {
             int id = item.getItemId();
             if (id == R.id.popup_menu_clear) {
                 list.remove(position);
-                stringSet.clear();
-                for (Note string : list) {
-                    stringSet.add(string.getNote() + "|" + string.getDataOfCreate());
-                }
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putStringSet(SHARED_KEY_SET, stringSet);
-                editor.apply();
+                recreateSet();
                 notesAdapter.notifyItemRemoved(position);
                 Toast.makeText(requireActivity(), "Clear", Toast.LENGTH_SHORT).show();
             } else {
-                showCustomAlertDialog(view, position);
+                showCustomAlertDialog(position);
                 Toast.makeText(requireActivity(), "Edit", Toast.LENGTH_SHORT).show();
             }
             return false;
@@ -128,31 +118,32 @@ public class AllNotesFragment extends Fragment {
     }
 
 
-    private void showCustomAlertDialog(View view, int position) {
+    private void showCustomAlertDialog(int position) {
         final View customView = getLayoutInflater().inflate(R.layout.alert_dialog_with_custom_view, null);
         new AlertDialog.Builder(requireActivity())
                 .setCancelable(true)
                 .setView(customView)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        EditText editText = customView.findViewById(R.id.edit_value);
-                        Note note1 = new Note(editText.getText().toString(), System.currentTimeMillis());
-                        list.set(position, note1);
-                        stringSet.clear();
-                        for (Note string : list) {
-                            stringSet.add(string.getNote() + "|" + string.getDataOfCreate());
-                        }
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putStringSet(SHARED_KEY_SET, stringSet);
-                        editor.apply();
-                        notesAdapter.notifyItemChanged(position);
-                        Toast.makeText(requireActivity(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
-                    }
+                .setPositiveButton("OK", (dialog, which) -> {
+                    EditText editText = customView.findViewById(R.id.edit_value);
+                    Note note1 = new Note(editText.getText().toString(), System.currentTimeMillis());
+                    list.set(position, note1);
+                    recreateSet();
+                    notesAdapter.notifyItemChanged(position);
+                    Toast.makeText(requireActivity(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
                 })
                 .show();
     }
 
+    private void recreateSet() {
+        stringSet.clear();
+        for (Note string : list) {
+            stringSet.add(string.getNote() + "|" + string.getDataOfCreate());
+        }
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putStringSet(SHARED_KEY_SET, stringSet);
+        editor.apply();
+    }
+/*
     private void recreateFragment() {
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()
@@ -160,5 +151,7 @@ public class AllNotesFragment extends Fragment {
                 .attach(AllNotesFragment.this)
                 .commit();
     }
+*/
+
 
 }

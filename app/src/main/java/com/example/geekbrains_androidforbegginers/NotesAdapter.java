@@ -18,7 +18,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     private final List<Note> noteList;
     private final Context context;
     private ClickOnNoteListener click;
-    private int menuPosition = -1;
 
 
     public NotesAdapter(List<Note> noteList, Context context) {
@@ -45,10 +44,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     @Override
     public int getItemCount() {
         return noteList.size();
-    }
-
-    public int getMenuPosition() {
-        return menuPosition;
     }
 
     class NoteViewHolder extends RecyclerView.ViewHolder {
