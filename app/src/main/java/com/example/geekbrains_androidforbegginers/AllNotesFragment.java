@@ -143,15 +143,4 @@ public class AllNotesFragment extends Fragment {
         editor.putStringSet(SHARED_KEY_SET, stringSet);
         editor.apply();
     }
-/*
-    private void recreateFragment() {
-        requireActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .detach(AllNotesFragment.this)
-                .attach(AllNotesFragment.this)
-                .commit();
-    }
-*/
-
-
 }
