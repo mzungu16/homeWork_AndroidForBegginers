@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "695375801103",
+    "project_id": "geekbrains-androidforbegginers",
+    "storage_bucket": "geekbrains-androidforbegginers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695375801103:android:f23151d0db583d69102c7a",
+        "android_client_info": {
+          "package_name": "com.example.geekbrains_androidforbegginers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695375801103-97gnjcgmi3r4qrv4ln63j364bbldi22c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqsVezLrEH2RviNmq4tFNJD9KVrIJvwCE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695375801103-97gnjcgmi3r4qrv4ln63j364bbldi22c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
